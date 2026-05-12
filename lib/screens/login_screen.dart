@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     elevation: 2,
                   ),
-                  onPressed: () => Navigator.pushReplacementNamed(context, '/map'),
+                  onPressed: () => Navigator.pushReplacementNamed(context, '/restaurants'),
                   child: const Text("LOGIN", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ),
