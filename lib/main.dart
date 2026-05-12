@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screens/signup_screen.dart';
+import 'screens/login_screen.dart';
 import 'screens/map_screen.dart';
 
 void main() {
@@ -13,13 +15,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      
-      home: const MapScreen(
-        resLat: 30.0444,
-        resLng: 31.2357,
-        restaurantName: "مطعم التجربة",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
+      
+      initialRoute: '/',
+      
+      routes: {
+        '/': (context) => const SignupScreen(),
+        
+        '/login': (context) => const LoginScreen(),
+        
+        '/map': (context) => const MapScreen(
+              resLat: 30.0444,
+              resLng: 31.2357,
+              restaurantName: "مطعم التجربة",
+            ),
+      },
     );
   }
 }
