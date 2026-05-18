@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SignupScreen(),
+        '/': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
         '/login': (context) => const LoginScreen(),
         '/restaurants': (context) => const RestaurantsScreen(),
       },

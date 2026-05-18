@@ -29,9 +29,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.restaurant.name),
-      ),
+      appBar: AppBar(title: Text(widget.restaurant.name)),
 
       body: FutureBuilder<List<Product>>(
         future: _productsFuture,
@@ -54,9 +52,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
               return Card(
                 child: ListTile(
-                  leading: const CircleAvatar(
-                    child: Icon(Icons.fastfood),
-                  ),
+                  leading: const CircleAvatar(child: Icon(Icons.fastfood)),
                   title: Text(product.name),
                 ),
               );

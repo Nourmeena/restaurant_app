@@ -65,7 +65,9 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
           final restaurants = snapshot.data!;
 
           if (restaurants.isEmpty) {
-            return const Center(child: Text('No restaurants found in this area.'));
+            return const Center(
+              child: Text('No restaurants found in this area.'),
+            );
           }
 
           return ListView.builder(

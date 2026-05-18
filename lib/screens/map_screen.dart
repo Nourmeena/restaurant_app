@@ -153,6 +153,49 @@ class _MapScreenState extends State<MapScreen> {
               },
             ),
           ),
+          Positioned(
+            top: 100,
+            left: 15,
+            right: 15,
+            child: StreamBuilder<String?>(
+              stream: _mapBloc.errorStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const SizedBox.shrink();
+                }
+
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 14,
+                    horizontal: 16,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade600,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black26, blurRadius: 8),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.wifi_off, color: Colors.white),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          snapshot.data!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
 
           // bottom distance information card
           Positioned(
@@ -169,8 +212,9 @@ class _MapScreenState extends State<MapScreen> {
                 child: StreamBuilder<String>(
                   stream: _mapBloc.distanceStream,
                   builder: (context, snapshot) {
-                    if (snapshot.hasError)
+                    if (snapshot.hasError) {
                       return Text("error: ${snapshot.error}");
+                    }
 
                     String distanceText = snapshot.data ?? "-- KM";
 

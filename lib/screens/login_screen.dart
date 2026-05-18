@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 20),
               // رابط للعودة للساين أب
               TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/'),
+                onPressed: () => Navigator.pushNamed(context, '/signup'),
                 child: const Text("Don't have an account? Create one"),
               ),
             ],

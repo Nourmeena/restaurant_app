@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,12 +14,14 @@ class MapBloc {
   final _userLocationSubject = BehaviorSubject<LatLng>();
   final _routePointsSubject = BehaviorSubject<List<LatLng>>();
   final _instructionsSubject = BehaviorSubject<List<String>>();
+  final _errorSubject = BehaviorSubject<String?>();
 
   // public streams for the ui to listen to
   Stream<String> get distanceStream => _distanceSubject.stream;
   Stream<LatLng> get userLocationStream => _userLocationSubject.stream;
   Stream<List<LatLng>> get routePointsStream => _routePointsSubject.stream;
   Stream<List<String>> get instructionsStream => _instructionsSubject.stream;
+  Stream<String?> get errorStream => _errorSubject.stream;
 
   Future<void> calculateDistanceToRestaurant(
     double destLat,
@@ -45,6 +48,9 @@ class MapBloc {
       await getDirections(userLatLng, destLat, destLng);
     } catch (e) {
       _distanceSubject.addError("location error: $e");
+      _errorSubject.add(
+        'Unable to get your location. تأكّد من تفعيل الإنترنت و صلاحيات الموقع.',
+      );
     }
   }
 
@@ -75,9 +81,19 @@ class MapBloc {
               .toList();
 
           _instructionsSubject.add(instructions);
+          _errorSubject.add(null);
         }
+      } else {
+        throw Exception('Directions service returned ${response.statusCode}');
       }
     } catch (e) {
+      String message =
+          'Unable to load directions. تأكّد من اتصال الإنترنت وحاول مرة أخرى.';
+      if (e is SocketException) {
+        message = 'لا يوجد اتصال بالإنترنت. الرجاء التحقق من الشبكة.';
+      }
+
+      _errorSubject.add(message);
       print("api error: $e");
       _instructionsSubject.add(["unable to load directions"]);
     }
@@ -88,5 +104,6 @@ class MapBloc {
     _userLocationSubject.close();
     _routePointsSubject.close();
     _instructionsSubject.close();
+    _errorSubject.close();
   }
 }
