@@ -12,4 +12,14 @@ class Restaurant {
     required this.lat,
     required this.lng,
   });
+
+  factory Restaurant.fromJson(Map<String, dynamic> json) {
+    return Restaurant(
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      cuisine: json['cuisine']?.toString() ?? '',
+      lat: (json['lat'] as num?)?.toDouble() ?? 0,
+      lng: (json['lng'] as num?)?.toDouble() ?? 0,
+    );
+  }
 }
